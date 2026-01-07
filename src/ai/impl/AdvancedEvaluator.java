@@ -16,7 +16,31 @@ public class AdvancedEvaluator extends Constants implements Evaluator {
                 int piece = board.getPiece(row, col);
                 if (piece == EMPTY) continue;
 
+                int score = 0;
 
+                if (piece == BLACK || piece == WHITE) score += 10;
+                if (piece == BLACK_KING || piece == WHITE_KING) score += 20;
+
+                if (col == 0 || col == BOARD_SIZE - 1) {
+                    score += 2;
+                }
+
+                if (piece == BLACK) {
+                    score += row;
+
+                    if (row == 0) score += 3;
+                }
+                if (piece == WHITE) {
+                    score += (5 - row);
+
+                    if (row == 5) score += 3;
+                }
+
+                if (piece == BLACK || piece == BLACK_KING) {
+                    blackScore += score;
+                } else {
+                    whiteScore += score;
+                }
             }
         }
 
