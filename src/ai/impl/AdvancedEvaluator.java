@@ -44,6 +44,10 @@ public class AdvancedEvaluator extends Constants implements Evaluator {
             }
         }
 
+        // more powerful but high time complexity
+        // blackScore += board.getLegalMoves(BLACK_PLAYER).size();
+        // whiteScore += board.getLegalMoves(WHITE_PLAYER).size();
+
         return blackScore - whiteScore;
     }
 }
