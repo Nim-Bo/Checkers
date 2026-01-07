@@ -41,4 +41,12 @@ public class GameManager extends Constants {
             currentPlayer = (currentPlayer == playerBlack) ? playerWhite : playerBlack;
         }
     }
+
+    private void handleGameOver(Player loser) {
+        ui.printBoard(board);
+        ui.showMessage("GAME OVER!");
+
+        String winner = (loser.getColor() == BLACK) ? "White" : "Black";
+        ui.showMessage("Winner is: " + winner);
+    }
 }
