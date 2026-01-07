@@ -42,7 +42,7 @@ public class AIPlayer extends Constants implements Player {
             Board clonedBoard = board.copy();
             clonedBoard.makeMove(move);
 
-            int value = minimax(clonedBoard, maxDepth - 1, !isMaximizing);
+            int value = minimax(clonedBoard, maxDepth - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, !isMaximizing);
 
             if (isMaximizing) {
                 if (value > bestValue) {
@@ -64,7 +64,7 @@ public class AIPlayer extends Constants implements Player {
         return bestMove;
     }
 
-    private int minimax(Board board, int depth, boolean isMaximizing) {
+    private int minimax(Board board, int depth, int alpha, int beta, boolean isMaximizing) {
         nodesCount++;
 
         if (depth == 0 || board.isGameOver(isMaximizing ? BLACK_PLAYER : WHITE_PLAYER)) {
@@ -79,8 +79,13 @@ public class AIPlayer extends Constants implements Player {
                 Board newBoard = board.copy();
                 newBoard.makeMove(move);
 
-                int eval = minimax(newBoard, depth - 1, false);
+                int eval = minimax(newBoard, depth - 1, alpha, beta, false);
                 maxEval = Math.max(maxEval, eval);
+
+                alpha = Math.max(alpha, eval);
+                if (beta <= alpha) {
+                    break;
+                }
             }
             return maxEval;
 
@@ -92,8 +97,13 @@ public class AIPlayer extends Constants implements Player {
                 Board newBoard = board.copy();
                 newBoard.makeMove(move);
 
-                int eval = minimax(newBoard, depth - 1, true);
+                int eval = minimax(newBoard, depth - 1, alpha, beta, true);
                 minEval = Math.min(minEval, eval);
+
+                beta = Math.min(beta, eval);
+                if (beta <= alpha) {
+                    break;
+                }
             }
             return minEval;
         }
