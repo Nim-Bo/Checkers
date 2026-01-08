@@ -118,4 +118,10 @@ public class AIPlayer extends Constants implements Player {
     public boolean isHuman() {
         return false;
     }
+
+    public int getNodesCount() {
+        return nodesCount;
+    }
+
 }
+

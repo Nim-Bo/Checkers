@@ -1,26 +1,35 @@
 package player.impl;
 
 import model.Board;
+import model.Constants;
 import model.Movement;
 import player.contracts.Player;
 
 import java.util.List;
-import java.util.Random;
 
-public class RandomPlayer implements Player {
+public class GreedyPlayer extends Constants implements Player {
     private int color;
-    private Random random;
 
-    public RandomPlayer(int color) {
+    public GreedyPlayer(int color) {
         this.color = color;
-        this.random = new Random();
     }
 
     @Override
     public Movement makeMove(Board board) {
         List<Movement> moves = board.getLegalMoves(color);
         if (moves.isEmpty()) return null;
-        return moves.get(random.nextInt(moves.size()));
+
+        Movement bestMove = moves.get(0);
+        int maxCaptured = -1;
+
+        for (Movement move : moves) {
+            int captured = move.isJump() ? 1 : 0;
+            if (captured > maxCaptured) {
+                maxCaptured = captured;
+                bestMove = move;
+            }
+        }
+        return bestMove;
     }
 
     @Override
