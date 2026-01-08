@@ -19,17 +19,13 @@ public class GreedyPlayer extends Constants implements Player {
         List<Movement> moves = board.getLegalMoves(color);
         if (moves.isEmpty()) return null;
 
-        Movement bestMove = moves.get(0);
-        int maxCaptured = -1;
-
         for (Movement move : moves) {
-            int captured = move.isJump() ? 1 : 0;
-            if (captured > maxCaptured) {
-                maxCaptured = captured;
-                bestMove = move;
+            if (move.isJump()) {
+                return move;
             }
         }
-        return bestMove;
+
+        return moves.getFirst();
     }
 
     @Override
