@@ -48,6 +48,9 @@ public class AdvancedEvaluator extends Constants implements Evaluator {
         // blackScore += board.getLegalMoves(BLACK_PLAYER).size();
         // whiteScore += board.getLegalMoves(WHITE_PLAYER).size();
 
-        return blackScore - whiteScore;
+        return playerColor == BLACK_PLAYER
+                ? blackScore - whiteScore
+                : whiteScore - blackScore;
+
     }
 }

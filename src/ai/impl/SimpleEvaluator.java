@@ -22,6 +22,8 @@ public class SimpleEvaluator extends Constants implements Evaluator {
             }
         }
 
-        return blackScore - whiteScore;
+        return playerColor == BLACK_PLAYER
+                ? blackScore - whiteScore
+                : whiteScore - blackScore;
     }
 }
