@@ -4,6 +4,7 @@ import model.Board;
 import model.Constants;
 import model.Movement;
 import player.contracts.Player;
+import player.impl.AIPlayer;
 import ui.Console;
 
 public class GameManager extends Constants {
@@ -46,7 +47,14 @@ public class GameManager extends Constants {
         ui.printBoard(board);
         ui.showMessage("GAME OVER!");
 
-        String winner = (loser.getColor() == BLACK) ? "White" : "Black";
-        ui.showMessage("Winner is: " + winner);
+        String winnerStr = (loser.getColor() == BLACK ? "White" : "Black");
+        int winner = (loser.getColor() == BLACK ? WHITE_PLAYER : BLACK_PLAYER);
+
+        ui.showMessage("Winner is: " + winnerStr);
+
+        // ==== به‌روزرسانی تجربه AI ====
+        if (playerBlack instanceof AIPlayer) ((AIPlayer) playerBlack).updateExperience(winner);
+        if (playerWhite instanceof AIPlayer) ((AIPlayer) playerWhite).updateExperience(winner);
     }
+
 }
